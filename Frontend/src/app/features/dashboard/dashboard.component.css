@@ -1,0 +1,186 @@
+.dashboard {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 48px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wordmark h1 {
+  font-size: 20px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-alive-bright);
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0% {
+    box-shadow: 0 0 0 0 rgba(108, 200, 145, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(108, 200, 145, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(108, 200, 145, 0);
+  }
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.logout-btn {
+  background: none;
+  border: 1px solid var(--divider);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.logout-btn:hover {
+  border-color: var(--accent-alive);
+  color: var(--text-primary);
+}
+
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 48px 0;
+}
+
+/* The signature element: a big button that breathes like a resting heartbeat,
+   inviting a single unambiguous tap. */
+.big-button {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: none;
+  background: radial-gradient(circle at 35% 30%, var(--accent-alive-bright), var(--accent-alive) 70%);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  box-shadow: 0 0 0 0 rgba(79, 168, 118, 0.5);
+  animation: rest-breathe 4s ease-in-out infinite;
+  transition:
+    transform 0.15s ease,
+    background 0.3s ease;
+}
+
+.big-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.big-button:disabled {
+  opacity: 0.85;
+  cursor: default;
+}
+
+.big-button.confirmed {
+  animation: none;
+  background: radial-gradient(circle at 35% 30%, var(--accent-alive-bright), var(--accent-alive) 80%);
+  box-shadow: 0 0 0 14px rgba(79, 168, 118, 0.12);
+}
+
+@keyframes rest-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(79, 168, 118, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 18px rgba(79, 168, 118, 0);
+  }
+}
+
+.ring {
+  position: absolute;
+  inset: -10px;
+  border: 1px solid rgba(108, 200, 145, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.label {
+  z-index: 1;
+}
+
+.hint {
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-align: center;
+  max-width: 280px;
+}
+
+.groups h2 {
+  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.empty {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.group-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.group-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+
+.group-name {
+  font-size: 15px;
+}
+
+.group-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
