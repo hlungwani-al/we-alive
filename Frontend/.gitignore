@@ -31,3 +31,5 @@ coverage/
 # Misc
 *.tgz
 coverage-final.json
+
+.angular

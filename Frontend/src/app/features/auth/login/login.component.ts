@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -12,19 +12,21 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  readonly form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
-  });
+  readonly form: FormGroup;
+
+  constructor(
+    private readonly fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
 
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
-
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router,
-  ) {}
 
   submit(): void {
     if (this.form.invalid || this.isSubmitting()) {
