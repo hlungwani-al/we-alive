@@ -16,7 +16,6 @@ const CHECKIN_WINDOW_MS = 24 * 60 * 60 * 1000;
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  readonly user = this.auth.currentUser;
   readonly groups = signal<GroupSummary[]>([]);
   readonly isChecking = signal(false);
   readonly lastCheckedInAt = signal<Date | null>(null);
@@ -30,11 +29,15 @@ export class DashboardComponent implements OnInit {
   });
 
   constructor(
-    private auth: AuthService,
-    private checkinService: CheckinService,
-    private groupService: GroupService,
-    private router: Router,
+    private readonly auth: AuthService,
+    private readonly checkinService: CheckinService,
+    private readonly groupService: GroupService,
+    private readonly router: Router,
   ) {}
+
+  get user() {
+    return this.auth.currentUser;
+  }
 
   ngOnInit(): void {
     this.groupService.listMine().subscribe({
