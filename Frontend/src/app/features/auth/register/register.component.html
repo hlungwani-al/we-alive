@@ -9,7 +9,7 @@
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
       <label class="field">
         <span>Name</span>
-        <input type="text" formControlName="displayName" autocomplete="name" placeholder="How your groups see you" />
+        <input type="text" formControlName="displayName" autocomplete="name" placeholder="How your connections see you" />
       </label>
       @if (form.controls['displayName'].invalid && form.controls['displayName'].touched) {
         <p class="field-error">Enter your name.</p>
@@ -29,6 +29,14 @@
       </label>
       @if (form.controls['password'].invalid && form.controls['password'].touched) {
         <p class="field-error">Password must be at least 8 characters.</p>
+      }
+
+      <label class="field">
+        <span>Confirm password</span>
+        <input type="password" formControlName="confirmPassword" placeholder="must match password">
+      </label>
+      @if (form.controls['confirmPassword'].touched && form.controls['password'].value !== form.controls['confirmPassword'].value) {
+        <p class="field-error">passwords don't match</p>
       }
 
       @if (errorMessage()) {

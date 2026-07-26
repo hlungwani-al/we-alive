@@ -23,6 +23,7 @@ export class RegisterComponent {
       displayName: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword:['', [Validators.required]],
     });
   }
 
@@ -43,7 +44,7 @@ export class RegisterComponent {
       next: () => this.router.navigate(['/dashboard']),
       error: () => {
         this.isSubmitting.set(false);
-        this.errorMessage.set('Could not create that account. The email may already be in use.');
+        this.errorMessage.set('Could not create account. The email may already be in use.');
       },
     });
   }
