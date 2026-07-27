@@ -27,15 +27,20 @@
         <span>Password</span>
         <input type="password" formControlName="password" autocomplete="new-password" placeholder="At least 8 characters" />
       </label>
-      @if (form.controls['password'].invalid && form.controls['password'].touched) {
-        <p class="field-error">Password must be at least 8 characters.</p>
+      @if (form.controls['password'].touched) {
+        @if(form.controls['password'].hasError('minlength')){
+           <p class="field-error">Password must be at least 8 characters.</p>
+        }
+        @if(form.controls['password'].hasError('pattern')){
+          <p class="field-error">must include uppercase, lowercase, number and a special character</p>
+        }
       }
 
       <label class="field">
         <span>Confirm password</span>
         <input type="password" formControlName="confirmPassword" placeholder="must match password">
       </label>
-      @if (form.controls['confirmPassword'].touched && form.controls['password'].value !== form.controls['confirmPassword'].value) {
+      @if (form.controls['confirmPassword'].touched && form.controls['confirmPassword'].hasError('passwordMismatch')) {
         <p class="field-error">passwords don't match</p>
       }
 
