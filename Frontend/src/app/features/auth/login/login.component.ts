@@ -14,6 +14,10 @@ import { AuthService } from '../../../core/services/auth.service';
 export class LoginComponent {
   readonly form: FormGroup;
 
+  readonly showPassword = signal(false);
+  readonly isSubmitting = signal(false);
+  readonly errorMessage = signal<string | null>(null);
+
   constructor(
     private readonly fb: FormBuilder,
     private auth: AuthService,
@@ -25,8 +29,9 @@ export class LoginComponent {
     });
   }
 
-  readonly isSubmitting = signal(false);
-  readonly errorMessage = signal<string | null>(null);
+  toggleShowPasswordVisibility(): void {
+    this.showPassword.update(value => !value)
+  }
 
   submit(): void {
     if (this.form.invalid || this.isSubmitting()) {

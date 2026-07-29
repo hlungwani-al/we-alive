@@ -17,7 +17,12 @@
 
       <label class="field">
         <span>Password</span>
-        <input type="password" formControlName="password" autocomplete="current-password" placeholder="••••••••" />
+        <div class="input-wrapper">
+          <input [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="current-password" placeholder="••••••••" />
+          <button type="button" class="toggle-visibility" (click)="toggleShowPasswordVisibility()" [attr.arial-label]="showPassword() ? 'hide' : 'show'">
+            {{showPassword() ? '🙈': '👁️'}}
+          </button>
+        </div>
       </label>
       @if (form.controls['password'].invalid && form.controls['password'].touched) {
         <p class="field-error">Password must be at least 8 characters.</p>
