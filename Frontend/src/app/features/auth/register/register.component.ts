@@ -34,6 +34,11 @@ export class RegisterComponent {
   readonly form: FormGroup;
 
   readonly strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
+  readonly showPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
+
+  readonly isSubmitting = signal(false);
+  readonly errorMessage = signal<string | null>(null);
 
   constructor(
     private readonly fb: FormBuilder,
@@ -48,8 +53,13 @@ export class RegisterComponent {
     }, {validators: passwordMatchValidator});
   }
 
-  readonly isSubmitting = signal(false);
-  readonly errorMessage = signal<string | null>(null);
+  togglePasswordVisibility(): void {
+    this.showPassword.update(value => !value);
+  }
+
+  toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword.update(value => !value);
+  }
 
   submit(): void {
     if (this.form.invalid || this.isSubmitting()) {

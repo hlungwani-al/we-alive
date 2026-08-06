@@ -4,7 +4,7 @@
       <span class="pulse-dot" aria-hidden="true"></span>
       <h1>WE-ALIVE</h1>
     </div>
-    <p class="tagline">Create an account to check in with your people.</p>
+    <p class="tagline">Create an account to check in with your connections.</p>
 
     <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
       <label class="field">
@@ -25,7 +25,12 @@
 
       <label class="field">
         <span>Password</span>
-        <input type="password" formControlName="password" autocomplete="new-password" placeholder="At least 8 characters" />
+        <div class="input-wrapper">
+          <input [type]="showPassword() ? 'text' : 'password'" formControlName="password" autocomplete="new-password" placeholder="At least 8 characters" />
+          <button type="button" class="toggle-visibility" (click)="togglePasswordVisibility()" [attr.arial-label]="showPassword() ? 'hide' : 'show'">
+            {{showPassword() ? '🙈' : '👁️'}}
+          </button>
+        </div>
       </label>
       @if (form.controls['password'].touched) {
         @if(form.controls['password'].hasError('minlength')){
@@ -38,7 +43,12 @@
 
       <label class="field">
         <span>Confirm password</span>
-        <input type="password" formControlName="confirmPassword" placeholder="must match password">
+        <div class="input-wrapper">
+          <input [type]="showConfirmPassword() ? 'password' : 'text'" formControlName="confirmPassword" placeholder="must match password">
+          <button type="button" (click)="toggleConfirmPasswordVisibility()" class="toggle-visibility" [attr.arial-label]="showPassword() ? 'hide' : 'show'">
+            {{showConfirmPassword() ? '🙈' : '👁️'}}
+          </button>
+        </div>
       </label>
       @if (form.controls['confirmPassword'].touched && form.controls['confirmPassword'].hasError('passwordMismatch')) {
         <p class="field-error">passwords don't match</p>
