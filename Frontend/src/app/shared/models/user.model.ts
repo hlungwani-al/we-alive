@@ -13,3 +13,7 @@ export interface ConnectionSummary {
   id: string;
   name: string;
 }
+
+export interface ConnectionSearchResult extends ConnectionSummary {
+  connected: boolean;
+}
