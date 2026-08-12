@@ -9,8 +9,7 @@ export interface AuthResponse {
   user: User;
 }
 
-export interface GroupSummary {
+export interface ConnectionSummary {
   id: string;
   name: string;
-  memberCount: number;
 }

@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { CheckinService } from '../../core/services/checkin.service';
-import { GroupService } from '../../core/services/group.service';
-import { GroupSummary } from '../../shared/models/user.model';
+import { ConnectionsService } from '../../core/services/connections.service';
+import { ConnectionSummary } from '../../shared/models/user.model';
 
 const CHECKIN_WINDOW_MS = 24 * 60 * 60 * 1000;
 
@@ -16,7 +16,7 @@ const CHECKIN_WINDOW_MS = 24 * 60 * 60 * 1000;
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
-  readonly groups = signal<GroupSummary[]>([]);
+  readonly connections = signal<ConnectionSummary[]>([]);
   readonly isChecking = signal(false);
   readonly lastCheckedInAt = signal<Date | null>(null);
   readonly justConfirmed = signal(false);
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private readonly auth: AuthService,
     private readonly checkinService: CheckinService,
-    private readonly groupService: GroupService,
+    private readonly connectionsService: ConnectionsService,
     private readonly router: Router,
   ) {}
 
@@ -40,9 +40,9 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.groupService.listMine().subscribe({
-      next: (groups) => this.groups.set(groups),
-      error: () => this.groups.set([]),
+    this.connectionsService.listMine().subscribe({
+      next: (connections) => this.connections.set(connections),
+      error: () => this.connections.set([]),
     });
   }
 

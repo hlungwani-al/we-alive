@@ -24,24 +24,23 @@
 
     <p class="hint">
       @if (isCurrentlyAlive()) {
-        Your groups can see you checked in
+        Your connections can see you checked in
         {{ lastCheckedInAt() ? ' just now' : '' }}. Good for the next 24 hours.
       } @else {
-        Tap the button to let your groups know you're okay.
+        Tap the button to let your connections know you're okay.
       }
     </p>
   </main>
 
   <section class="groups">
-    <h2>Your groups</h2>
-    @if (groups().length === 0) {
-      <p class="empty">You haven't joined a group yet.</p>
+    <h2>Your connections</h2>
+    @if (connections().length === 0) {
+      <p class="empty">You haven't connected with anyone yet.</p>
     } @else {
       <ul class="group-list">
-        @for (group of groups(); track group.id) {
+        @for (connection of connections(); track connection.id) {
           <li class="group-card">
-            <span class="group-name">{{ group.name }}</span>
-            <span class="group-meta">{{ group.memberCount }} members</span>
+            <span class="group-name">{{ connection.name }}</span>
           </li>
         }
       </ul>
