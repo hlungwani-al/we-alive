@@ -22,29 +22,72 @@
       <span class="label">{{ justConfirmed() ? "You're marked alive" : "I'm alive" }}</span>
     </button>
 
-    <p class="hint">
-      @if (isCurrentlyAlive()) {
-        Your groups can see you checked in
-        {{ lastCheckedInAt() ? ' just now' : '' }}. Good for the next 24 hours.
-      } @else {
-        Tap the button to let your groups know you're okay.
-      }
+    <p class="hint" *ngIf="isCurrentlyAlive(); else notAlive">
+      Your connections can see you checked in
+      {{ lastCheckedInAt() ? ' just now' : '' }}. Good for the next 24 hours.
     </p>
+    <ng-template #notAlive>
+      <p class="hint">Tap the button to let your connections know you're okay.</p>
+    </ng-template>
   </main>
 
-  <section class="groups">
-    <h2>Your groups</h2>
-    @if (groups().length === 0) {
-      <p class="empty">You haven't joined a group yet.</p>
-    } @else {
-      <ul class="group-list">
-        @for (group of groups(); track group.id) {
-          <li class="group-card">
-            <span class="group-name">{{ group.name }}</span>
-            <span class="group-meta">{{ group.memberCount }} members</span>
-          </li>
-        }
+  <section class="people-search">
+    <div class="section-header">
+      <h2>Search people</h2>
+      <p class="section-hint">Find someone to connect with by name.</p>
+    </div>
+
+    <div class="search-form">
+      <input
+        class="search-input"
+        type="search"
+        [value]="searchQuery()"
+        (input)="updateSearchQuery($any($event.target).value)"
+        (keydown.enter)="searchPeople()"
+        placeholder="Search people to connect with"
+        aria-label="Search people to connect with"
+      />
+      <button
+        class="search-btn"
+        type="button"
+        (click)="searchPeople()"
+        [disabled]="searchInProgress() || !searchQuery().trim()"
+      >
+        {{ searchInProgress() ? 'Searching…' : 'Search' }}
+      </button>
+    </div>
+
+    <p class="search-error" *ngIf="searchError()">{{ searchError() }}</p>
+
+    <div class="search-results">
+      <p class="empty" *ngIf="!searchInProgress() && searchQuery().trim() && searchResults().length === 0 && !searchError()">
+        No people found for "{{ searchQuery() }}".
+      </p>
+
+      <ul class="search-list" *ngIf="searchResults().length > 0">
+        <li class="search-card" *ngFor="let result of searchResults()">
+          <span class="search-name">{{ result.name }}</span>
+          <button
+            class="connect-btn"
+            *ngIf="!result.connected"
+            type="button"
+            (click)="connectTo(result.id)"
+          >
+            Connect
+          </button>
+          <span class="connected-badge" *ngIf="result.connected">Connected</span>
+        </li>
       </ul>
-    }
+    </div>
+  </section>
+
+  <section class="groups">
+    <h2>Your connections</h2>
+    <p class="empty" *ngIf="connections().length === 0">You haven't connected with anyone yet.</p>
+    <ul class="group-list" *ngIf="connections().length > 0">
+      <li class="group-card" *ngFor="let connection of connections()">
+        <span class="group-name">{{ connection.name }}</span>
+      </li>
+    </ul>
   </section>
 </div>
